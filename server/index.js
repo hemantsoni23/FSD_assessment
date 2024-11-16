@@ -36,6 +36,10 @@ const corsOptions = {
 
 // Use CORS middleware
 app.use(cors(corsOptions));
+
+// Enable preflight requests
+app.options('*', cors(corsOptions));
+
 // Placeholder route
 app.get('/', (req, res) => {
     res.send('Server is running');
