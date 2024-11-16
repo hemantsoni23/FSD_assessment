@@ -129,4 +129,3 @@ This is a full-stack web application with multi-role support and protected route
 
 ## Conclusion
 This project showcases a robust implementation of a full-stack web application with dynamic routing and role-based access control. It highlights skills in modern frontend and backend technologies and demonstrates the ability to solve real-world problems using React, Node.js, and Express.js.
-```
