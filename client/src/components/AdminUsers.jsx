@@ -11,9 +11,11 @@ const AdminUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_ROUTE}/user/all-profiles`,{
+        const response = await axios.get(`${process.env.REACT_APP_API_ROUTE}/user/all-profiles`,
+      {
+        withCredentials: true,
         headers: {
-          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json',
         },
       });
         setUsers(response.data);
@@ -32,7 +34,14 @@ const AdminUsers = () => {
 
   const handleUpdateUser = async (updatedUser) => {
     try {
-      await axios.put(`${process.env.REACT_APP_API_ROUTE}/user/update-profile`, updatedUser);
+      await axios.put(`${process.env.REACT_APP_API_ROUTE}/user/update-profile`, updatedUser,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       setIsUserUpdated(true);
     } catch (err) {
       console.error('Error updating user:', err.response?.data?.message || err.message);
@@ -45,9 +54,10 @@ const AdminUsers = () => {
         `${process.env.REACT_APP_API_ROUTE}/user/delete-profile`,
         {
           data: { email: user.email },
-          headers: {
-            'Cache-Control': 'no-cache',
-          },
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+            },
         }
       );
       setIsUserUpdated(true); 

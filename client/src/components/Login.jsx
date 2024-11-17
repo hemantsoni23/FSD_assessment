@@ -40,7 +40,12 @@ const Login = () => {
       await axios.post(
         `${process.env.REACT_APP_API_ROUTE}/user/login`,
         { email, password },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       Cookies.set('email', email);
       const role = Cookies.get('role');

@@ -15,17 +15,25 @@ app.use(morgan("dev"));
 const allowedOrigins = [
   'https://assessment-hemant-soni.vercel.app',
   'https://fsd-assessment-hemant-soni.vercel.app',
+  'https://fsd-assessment-g01mr9cqb-hemantsoni42s-projects.vercel.app',
   process.env.FRONTEND_URL,
 ];
 
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, 
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 
 // Enable preflight requests globally
 app.options('*', cors(corsOptions));

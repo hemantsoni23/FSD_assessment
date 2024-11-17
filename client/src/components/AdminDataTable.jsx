@@ -19,7 +19,7 @@ const AdminDataTable = () => {
           {
             withCredentials: true,
             headers: {
-              'Cache-Control': 'no-cache',
+              'Content-Type': 'application/json',
             },
           }
         );
@@ -152,7 +152,12 @@ const DeleteModal = ({ row, onClose }) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_ROUTE}/data/${row._id}`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       onClose();
     } catch (err) {
@@ -205,7 +210,12 @@ const EditModal = ({ row, onClose }) => {
       await axios.put(
         `${process.env.REACT_APP_API_ROUTE}/data/${row._id}`, 
         formData, 
-        { withCredentials: true } 
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        } 
       );
       onClose();
     } catch (err) {
