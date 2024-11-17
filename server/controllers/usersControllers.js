@@ -21,9 +21,9 @@ const register = async (req, res) => {
 
         const accessToken = createAccessToken({ email, role, country });
 
-        res.cookie('accessToken', accessToken, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('role', role, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('country', country, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('role', role, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('country', country, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         res.status(500).json({ error: 'User already exists or server error' });
@@ -47,9 +47,9 @@ const login = async (req, res) => {
 
         const accessToken = createAccessToken({ email: user.email, role: user.role, country: user.country });
 
-        res.cookie('accessToken', accessToken, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('role', user.role, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('country', user.country, {sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('role', user.role, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('country', user.country, {domain: '.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'User logged in successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
