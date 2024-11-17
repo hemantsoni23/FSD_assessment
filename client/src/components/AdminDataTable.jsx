@@ -11,11 +11,11 @@ const AdminDataTable = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const accessToken = Cookies.get('accessToken');
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const accessToken = Cookies.get('accessToken');
         const response = await axios.get(
           `${process.env.REACT_APP_API_ROUTE}/data/all`,
           {
@@ -153,6 +153,7 @@ const DeleteModal = ({ row, onClose }) => {
 
   const handleDelete = async () => {
     try {
+      const accessToken = Cookies.get('accessToken');
       await axios.delete(
         `${process.env.REACT_APP_API_ROUTE}/data/${row._id}`,
         {
@@ -211,6 +212,7 @@ const EditModal = ({ row, onClose }) => {
     setError(null);
 
     try {
+      const accessToken = Cookies.get('accessToken');
       await axios.put(
         `${process.env.REACT_APP_API_ROUTE}/data/${row._id}`, 
         formData, 
