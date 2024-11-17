@@ -37,7 +37,7 @@ const Login = () => {
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_ROUTE}/user/login`,
         { email, password },
         {
@@ -48,7 +48,10 @@ const Login = () => {
         }
       );
       Cookies.set('email', email);
-      const role = Cookies.get('role');
+      const { accessToken, role, country } = response.data;
+      Cookies.set('accessToken', accessToken);
+      Cookies.set('role', role);
+      Cookies.set('country', country);
       login();
       console.log(Cookies.get('email'));
       role === 'Admin' ? navigate('/admin') : navigate('/dashboard');
