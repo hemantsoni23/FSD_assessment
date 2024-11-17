@@ -50,6 +50,7 @@ const Login = () => {
       Cookies.set('email', email);
       const role = Cookies.get('role');
       login();
+      console.log(Cookies.get('email'));
       role === 'Admin' ? navigate('/admin') : navigate('/dashboard');
     } catch (error) {
       setError(error.response?.data?.error || 'Login failed');
