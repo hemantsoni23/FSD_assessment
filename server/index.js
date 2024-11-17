@@ -12,33 +12,24 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// CORS options
-const corsOptions = {
-  origin: (origin, callback) => {
-    const allowedOrigins = [
-      'https://assessment-hemant-soni.vercel.app',
-'https://fsd-assessment-kandmkmlq-hemantsoni42s-projects.vercel.app',
-'https://fsd-assessment-git-main-hemantsoni42s-projects.vercel.app',
-'https://fsd-assessment-hemantsoni42s-projects.vercel.app/',
-      process.env.FRONTEND_URL, 
-    ];
+const allowedOrigins = [
+  'https://assessment-hemant-soni.vercel.app',
+  'https://fsd-assessment-hemant-soni.vercel.app',
+  process.env.FRONTEND_URL,
+];
 
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true); 
-    } else {
-      callback(new Error('Not allowed by CORS'), false);  
-    }
-  },
+const corsOptions = {
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, 
 };
 
-// Use CORS middleware
 app.use(cors(corsOptions));
 
-// Enable preflight requests
+// Enable preflight requests globally
 app.options('*', cors(corsOptions));
+
 
 // Placeholder route
 app.get('/', (req, res) => {
