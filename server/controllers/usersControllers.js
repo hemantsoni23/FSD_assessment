@@ -47,9 +47,9 @@ const login = async (req, res) => {
 
         const accessToken = createAccessToken({ email: user.email, role: user.role, country: user.country });
 
-        res.cookie('accessToken', accessToken, {sameSite: 'None', secure: true, httpOnly:true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('role', user.role, {sameSite: 'None', secure: true, httpOnly:true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('country', user.country, {sameSite: 'None', secure: true, httpOnly:true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, {sameSite: 'None',   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('role', user.role, {sameSite: 'None',   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('country', user.country, {sameSite: 'None',   maxAge: 2 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'User logged in successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
