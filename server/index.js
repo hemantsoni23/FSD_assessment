@@ -12,8 +12,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// Define allowed origin pattern for subdomains
-const allowedOriginPattern = /^https:\/\/.*\.assessment-hemant-soni\.vercel\.app$/;
+// Allow access from any subdomain ending with .vercel.app
+const allowedOriginPattern = /^https:\/\/.*\.vercel\.app$/;
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -31,8 +31,26 @@ const corsOptions = {
 // Use CORS middleware
 app.use(cors(corsOptions));
 
-// Handle preflight requests globally
-app.options('*', cors(corsOptions));
+// Handle preflight requests explicitly
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.status(200).end();
+});
+
+// Middleware to explicitly set headers
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOriginPattern.test(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  next();
+});
 
 // Placeholder route
 app.get('/', (req, res) => {
