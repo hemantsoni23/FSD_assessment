@@ -6,18 +6,13 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const app = express();
 
-dotenv.config()
+dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
-// const allowedOrigins = [
-//   'https://assessment-hemant-soni.vercel.app',
-//   'https://fsd-assessment-hemant-soni.vercel.app',
-//   'https://fsd-assessment-g01mr9cqb-hemantsoni42s-projects.vercel.app',
-//   process.env.FRONTEND_URL,
-// ];
+// Define allowed origin pattern for subdomains
 const allowedOriginPattern = /^https:\/\/.*\.assessment-hemant-soni\.vercel\.app$/;
 
 const corsOptions = {
@@ -33,36 +28,23 @@ const corsOptions = {
   credentials: true,
 };
 
+// Use CORS middleware
 app.use(cors(corsOptions));
 
-
-app.use(cors(corsOptions));
-
-// Enable preflight requests globally
+// Handle preflight requests globally
 app.options('*', cors(corsOptions));
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  next();
-});
 
 // Placeholder route
 app.get('/', (req, res) => {
-    res.send('Server is running');
+  res.send('Server is running');
 });
 
-// connect to the database
+// Connect to the database
 connectDB();
 
-//routes
-app.use('/api/user',require("./routes/usersRoutes"));
-app.use('/api/data', require("./routes/dataRoutes"));
+// Routes
+app.use('/api/user', require('./routes/usersRoutes'));
+app.use('/api/data', require('./routes/dataRoutes'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
