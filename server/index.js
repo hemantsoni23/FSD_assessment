@@ -20,7 +20,6 @@ const allowedOriginPattern = /^https:\/\/.*\.vercel.app$/;
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests from your front-end domain or no origin (for testing)
     if (allowedOriginPattern.test(origin) || !origin) {
       callback(null, true);
     } else {
@@ -29,15 +28,23 @@ const corsOptions = {
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Make sure credentials are allowed
+  credentials: true, 
 };
 
 // Use CORS middleware with the configured options
 app.use(cors(corsOptions));
 
+// Handle preflight requests explicitly
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.status(200).end();
+});
+
 // Placeholder route
 app.get('/', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
   res.send('Server is running');
 });
 
