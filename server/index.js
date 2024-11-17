@@ -8,15 +8,19 @@ const app = express();
 
 dotenv.config();
 
+// Connect to the database
+connectDB();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 
 // Allow access from any subdomain ending with .vercel.app
-const allowedOriginPattern = /^https:\/\/.*\.vercel\.app$/;
+const allowedOriginPattern = /^https:\/\/.*\.vercel.app$/;
 
 const corsOptions = {
   origin: (origin, callback) => {
+    // Allow requests from your front-end domain or no origin (for testing)
     if (allowedOriginPattern.test(origin) || !origin) {
       callback(null, true);
     } else {
@@ -25,40 +29,16 @@ const corsOptions = {
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  credentials: true, // Make sure credentials are allowed
 };
 
-// Use CORS middleware
+// Use CORS middleware with the configured options
 app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.status(200).end();
-});
-
-// Middleware to explicitly set headers
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOriginPattern.test(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  next();
-});
 
 // Placeholder route
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
-
-// Connect to the database
-connectDB();
 
 // Routes
 app.use('/api/user', require('./routes/usersRoutes'));
