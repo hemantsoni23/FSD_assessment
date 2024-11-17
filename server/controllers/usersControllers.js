@@ -21,9 +21,9 @@ const register = async (req, res) => {
 
         const accessToken = createAccessToken({ email, role, country });
 
-        res.cookie('accessToken', accessToken, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('role', role, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('country', country, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('role', role, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('country', country, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
         res.status(500).json({ error: 'User already exists or server error' });
@@ -47,9 +47,9 @@ const login = async (req, res) => {
 
         const accessToken = createAccessToken({ email: user.email, role: user.role, country: user.country });
 
-        res.cookie('accessToken', accessToken, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('role', user.role, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
-        res.cookie('country', user.country, {domain: 'assessment-hemant-soni.vercel.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('accessToken', accessToken, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('role', user.role, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
+        res.cookie('country', user.country, {domain: '.app',sameSite: 'None', secure: true,   maxAge: 2 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'User logged in successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
