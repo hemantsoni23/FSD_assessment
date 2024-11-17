@@ -37,6 +37,7 @@ app.use(cors(corsOptions));
 
 // Placeholder route
 app.get('/', (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
   res.send('Server is running');
 });
 
