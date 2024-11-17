@@ -1,11 +1,13 @@
 // src/components/CreateDataButton.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const CreateDataButton = ({ onRefreshTable }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', age: '' });
   const [error, setError] = useState('');
+  const accessToken = Cookies.get('accessToken');
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -33,7 +35,7 @@ const CreateDataButton = ({ onRefreshTable }) => {
     try {
       await axios.post(`${process.env.REACT_APP_API_ROUTE}/data`, { name, age }, {
         withCredentials: true,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: accessToken ? `Bearer ${accessToken}` : '', },
       });
 
       alert('Data created successfully!');

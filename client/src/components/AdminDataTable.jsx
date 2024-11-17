@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const AdminDataTable = () => {
   const [data, setData] = useState([]);
@@ -10,6 +11,7 @@ const AdminDataTable = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const accessToken = Cookies.get('accessToken');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +22,7 @@ const AdminDataTable = () => {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
+              Authorization: accessToken ? `Bearer ${accessToken}` : '',
             },
           }
         );
@@ -156,6 +159,7 @@ const DeleteModal = ({ row, onClose }) => {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
+            Authorization: accessToken ? `Bearer ${accessToken}` : '',
           },
         }
       );
@@ -214,6 +218,7 @@ const EditModal = ({ row, onClose }) => {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
+            Authorization: accessToken ? `Bearer ${accessToken}` : '',
           },
         } 
       );

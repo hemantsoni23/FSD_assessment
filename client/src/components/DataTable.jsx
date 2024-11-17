@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const DataTable = ({ refreshTable }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
+  const accessToken = Cookies.get('accessToken');
 
   // Fetch data from API
   useEffect(() => {
@@ -13,7 +15,7 @@ const DataTable = ({ refreshTable }) => {
           `${process.env.REACT_APP_API_ROUTE}/data`,
           {
             withCredentials: true,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', Authorization: accessToken ? `Bearer ${accessToken}` : '', },
           }
         );
         const result = await response.data;

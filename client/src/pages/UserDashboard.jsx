@@ -9,7 +9,7 @@ import axios from 'axios';
 const UserDashboard = () => {
   const { role, country, handleCountrySelect } = useContext(UserContext);
   const [countrySelected, setCountrySelected] = useState(localStorage.getItem('country') ? true : false);
-  const [refreshTable, setRefreshTable] = useState(false); // Added state for refreshing table
+  const [refreshTable, setRefreshTable] = useState(false);
 
   useEffect(() => {
     const updateCountry = async () => {
